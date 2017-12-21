@@ -37,9 +37,15 @@ var routes = Routes{
 		Index,
 	},
 	Route{
-		"Post",
+		"GetAllStats",
 		"GET",
-		"/PostEvent",
-		PostEvent,
+		"/AllStats",
+		GetAllStats,
+	},
+	Route{
+		"PostStat",
+		"POST",
+		"/PostStat",
+		PostStat,
 	},
 }
