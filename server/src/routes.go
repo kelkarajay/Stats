@@ -31,4 +31,10 @@ var routes = Routes{
 		API + "/v1" + "/PostStat",
 		PostStat,
 	},
+	Route{
+		"Index",
+		"GET",
+		"/",
+		Index,
+	},
 }
