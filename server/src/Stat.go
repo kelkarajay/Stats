@@ -10,6 +10,7 @@ type Stat struct {
 	StatCategory string    `json:"statCategory"`
 	StatValue    string    `json:"statValue"`
 	StatTime     time.Time `json:"statTime"`
+	StatData     string    `json:"statData"`
 }
 
 // Stats - array of stat objects
