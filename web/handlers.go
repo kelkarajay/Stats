@@ -22,8 +22,8 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		Time: now.Format("15:04:05"),
 	}
 
-	t, err := template.ParseFiles("index.html") //parse the html file homepage.html
-	if err != nil {                             // if there is an error
+	t, err := template.ParseFiles("./web/index.html") //parse the html file homepage.html
+	if err != nil {                                   // if there is an error
 		log.Print("template parsing error: ", err) // log it
 	}
 	err = t.Execute(w, HomePageVars) //execute the template and pass it the HomePageVars struct to fill in the gaps
