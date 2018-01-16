@@ -73,6 +73,18 @@ func PostStat(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func GetAllApps(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func GetApp(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func CreateApp(w http.ResponseWriter, r *http.Request) {
+
+}
+
 func returnBadRequest(w *http.ResponseWriter, err error) {
 	(*w).Header().Set("Content-Type", "application/json; charset=UTF-8")
 	(*w).WriteHeader(http.StatusBadRequest)
