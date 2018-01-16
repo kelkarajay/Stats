@@ -2,9 +2,11 @@ package web
 
 import (
 	"time"
+
+	"github.com/Xivolkar/Stats/model"
 )
 
-var stats Stats
+var stats model.Stats
 
 // Give us some seed data
 func init() {
@@ -12,7 +14,7 @@ func init() {
 }
 
 // RepoCreateStat - Creates and records the stat in the repo
-func RepoCreateStat(st Stat) Stat {
+func RepoCreateStat(st model.Stat) model.Stat {
 	st.StatTime = time.Now()
 	stats = append(stats, st)
 	return st

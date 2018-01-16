@@ -8,6 +8,8 @@ import (
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/Xivolkar/Stats/model"
 )
 
 type PageVariables struct {
@@ -45,7 +47,7 @@ func GetAllStats(w http.ResponseWriter, r *http.Request) {
 
 // PostStat - Creates and stores stat
 func PostStat(w http.ResponseWriter, r *http.Request) {
-	var st Stat
+	var st model.Stat
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 	if err != nil {
 		returnBadRequest(&w, err)
