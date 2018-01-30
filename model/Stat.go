@@ -9,8 +9,8 @@ type Stat struct {
 	StatType     string    `json:"statType"`
 	StatCategory string    `json:"statCategory"`
 	StatValue    string    `json:"statValue"`
-	StatTime     time.Time `json:"statTime"`
-	StatData     string    `json:"statData"`
+	StatTime     time.Time `json:"statTime,omitempty"`
+	StatData     string    `json:"statData,omitempty"`
 }
 
 // Stats - array of stat objects
