@@ -48,12 +48,22 @@ func GetAllStats(w http.ResponseWriter, r *http.Request) {
 // PostStat - Creates and stores stat
 func PostStat(w http.ResponseWriter, r *http.Request) {
 	var st model.Stat
-	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
-	if err != nil {
+	var err error
+	var body []byte
+
+	if r.Body != nil {
+		body, err = ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
+		if err != nil {
+			returnBadRequest(&w, err)
+			return
+		}
+	} else {
 		returnBadRequest(&w, err)
+		return
 	}
 	if err := r.Body.Close(); err != nil {
 		returnBadRequest(&w, err)
+		return
 	}
 
 	if err := json.Unmarshal(body, &st); err != nil {

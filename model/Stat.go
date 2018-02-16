@@ -4,7 +4,7 @@ import "time"
 
 // Stat - model for statistic store
 type Stat struct {
-	StatAppID    App       `json:"statAppID"`
+	StatAppID    App       `json:"app"`
 	StatClientID string    `json:"statClientID"`
 	StatType     string    `json:"statType"`
 	StatCategory string    `json:"statCategory"`
