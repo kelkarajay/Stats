@@ -40,13 +40,13 @@ var routes = Routes{
 	Route{
 		"GetApp",
 		"GET",
-		apiV1 + "/App/{appID}",
+		apiV1 + "/Apps/{appID}",
 		GetApp,
 	},
 	Route{
 		"CreateApp",
 		"POST",
-		apiV1 + "/App",
+		apiV1 + "/Apps",
 		CreateApp,
 	},
 	Route{

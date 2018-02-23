@@ -9,7 +9,10 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/Xivolkar/Stats/db"
+
 	"github.com/Xivolkar/Stats/model"
+	"github.com/gorilla/mux"
 )
 
 type PageVariables struct {
@@ -84,9 +87,11 @@ func PostStat(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetAllApps(w http.ResponseWriter, r *http.Request) {
+	var apps []model.App
+	db.CurrentInstance.Find(&apps)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(stats); err != nil {
+	if err := json.NewEncoder(w).Encode(&apps); err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(err)
@@ -94,11 +99,17 @@ func GetAllApps(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetApp(w http.ResponseWriter, r *http.Request) {
-
+	params := mux.Vars(r)
+	var app model.App
+	db.CurrentInstance.First(&app, params["appID"])
+	json.NewEncoder(w).Encode(&app)
 }
 
 func CreateApp(w http.ResponseWriter, r *http.Request) {
-
+	var app model.App
+	json.NewDecoder(r.Body).Decode(&app)
+	db.CurrentInstance.Create(&app)
+	json.NewEncoder(w).Encode(&app)
 }
 
 func returnBadRequest(w *http.ResponseWriter, err error) {
