@@ -25,3 +25,6 @@ _testmain.go
 
 # VS Code
 **/.DS_Store
+
+# Test Database
+foo.db

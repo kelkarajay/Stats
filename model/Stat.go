@@ -1,10 +1,15 @@
 package model
 
-import "time"
+import (
+	"time"
+
+	"github.com/jinzhu/gorm"
+)
 
 // Stat - model for statistic store
 type Stat struct {
-	StatAppID    App       `json:"app"`
+	gorm.Model
+	StatAppID    string    `json:"statAppID"`
 	StatClientID string    `json:"statClientID"`
 	StatType     string    `json:"statType"`
 	StatCategory string    `json:"statCategory"`
