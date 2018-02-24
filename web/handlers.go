@@ -39,9 +39,11 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 // GetAllStats - Retrieves all stats
 func GetAllStats(w http.ResponseWriter, r *http.Request) {
+	var stats []model.Stat
+	db.CurrentInstance.Find(&stats)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(stats); err != nil {
+	if err := json.NewEncoder(w).Encode(&stats); err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(w).Encode(err)
@@ -78,10 +80,10 @@ func PostStat(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	newSt := RepoCreateStat(st)
+	db.CurrentInstance.Create(&st)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusCreated)
-	if err := json.NewEncoder(w).Encode(newSt); err != nil {
+	if err := json.NewEncoder(w).Encode(&st); err != nil {
 		panic(err)
 	}
 }
