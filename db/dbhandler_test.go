@@ -5,7 +5,7 @@ import (
 )
 
 func TestNewDB(t *testing.T) {
-	err := NewDB()
+	_, err := NewDB()
 	if err != nil {
 		t.Error("Database not setup", err)
 	}

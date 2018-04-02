@@ -9,6 +9,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/Xivolkar/Stats/app"
+
 	"github.com/Xivolkar/Stats/model"
 )
 
@@ -18,8 +20,10 @@ func TestGetAllStatsHandler(t *testing.T) {
 		log.Fatal(err)
 	}
 
+	ctx := app.CreateContextForTestSetup()
+
 	resp := httptest.NewRecorder()
-	handler := http.HandlerFunc(GetAllStats)
+	handler := makeHandler(ctx, GetAllStats)
 
 	handler.ServeHTTP(resp, req)
 
@@ -38,8 +42,10 @@ func TestPostStatHandler(t *testing.T) {
 		log.Fatal(err)
 	}
 
+	ctx := app.CreateContextForTestSetup()
+
 	resp := httptest.NewRecorder()
-	handler := http.HandlerFunc(PostStat)
+	handler := makeHandler(ctx, PostStat)
 
 	handler.ServeHTTP(resp, req)
 
