@@ -6,30 +6,28 @@ import (
 
 	"github.com/Xivolkar/Stats/db"
 
-	"github.com/Xivolkar/Stats/model"
+	"github.com/Xivolkar/Stats/app"
 	"github.com/Xivolkar/Stats/web"
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/Xivolkar/Stats/app"
 )
 
 func main() {
-	d, err := db.NewProdDB()
+	d, err := db.NewDB()
 	if err != nil {
 		log.Fatalln("No DB")
 	}
 
-	ins := &db.Instance{d}
+	instance := &db.Instance{DB: d}
 
 	ctx := app.AppContext{
-		DB: ins,
+		DB: instance,
 	}
 	log.Println(ctx)
 
 	log.Println("Database up and running")
-	db.CurrentInstance.AutoMigrate(&model.Stat{}, &model.App{})
-	defer db.CurrentInstance.Close()
+	defer ctx.DB.Close()
 
-	router := web.NewRouter()
+	router := web.NewRouter(ctx)
 	log.Println("Starting Stats Server")
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

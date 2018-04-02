@@ -1,15 +1,11 @@
 package web
 
-import (
-	"net/http"
-)
-
 // Route type def
 type Route struct {
 	Name        string
 	Method      string
 	Pattern     string
-	HandlerFunc http.HandlerFunc
+	HandlerFunc HandlerFunc
 }
 
 // Routes - collection of routes

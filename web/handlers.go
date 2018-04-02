@@ -9,10 +9,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Xivolkar/Stats/db"
-
+	"github.com/Xivolkar/Stats/app"
 	"github.com/Xivolkar/Stats/model"
-	"github.com/gorilla/mux"
 )
 
 type PageVariables struct {
@@ -20,7 +18,7 @@ type PageVariables struct {
 	Time string
 }
 
-func Index(w http.ResponseWriter, r *http.Request) {
+func Index(w http.ResponseWriter, r *http.Request, ctx app.AppContext) {
 	now := time.Now()              // find the time right now
 	HomePageVars := PageVariables{ //store the date and time in a struct
 		Date: now.Format("02-01-2006"),
@@ -38,9 +36,11 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetAllStats - Retrieves all stats
-func GetAllStats(w http.ResponseWriter, r *http.Request) {
+func GetAllStats(w http.ResponseWriter, r *http.Request, ctx app.AppContext) {
 	var stats []model.Stat
-	db.CurrentInstance.Find(&stats)
+
+	stats, _ = ctx.DB.GetStats()
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(&stats); err != nil {
@@ -51,7 +51,7 @@ func GetAllStats(w http.ResponseWriter, r *http.Request) {
 }
 
 // PostStat - Creates and stores stat
-func PostStat(w http.ResponseWriter, r *http.Request) {
+func PostStat(w http.ResponseWriter, r *http.Request, ctx app.AppContext) {
 	var st model.Stat
 	var err error
 	var body []byte
@@ -80,7 +80,8 @@ func PostStat(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	db.CurrentInstance.Create(&st)
+	// TODO: Create
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusCreated)
 	if err := json.NewEncoder(w).Encode(&st); err != nil {
@@ -88,9 +89,9 @@ func PostStat(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func GetAllApps(w http.ResponseWriter, r *http.Request) {
+func GetAllApps(w http.ResponseWriter, r *http.Request, ctx app.AppContext) {
 	var apps []model.App
-	db.CurrentInstance.Find(&apps)
+	// TODO : QUERY
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 	if err := json.NewEncoder(w).Encode(&apps); err != nil {
@@ -100,17 +101,20 @@ func GetAllApps(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func GetApp(w http.ResponseWriter, r *http.Request) {
-	params := mux.Vars(r)
+func GetApp(w http.ResponseWriter, r *http.Request, ctx app.AppContext) {
 	var app model.App
-	db.CurrentInstance.First(&app, params["appID"])
+
+	// TODO : QUERY
+
 	json.NewEncoder(w).Encode(&app)
 }
 
-func CreateApp(w http.ResponseWriter, r *http.Request) {
+func CreateApp(w http.ResponseWriter, r *http.Request, ctx app.AppContext) {
 	var app model.App
 	json.NewDecoder(r.Body).Decode(&app)
-	db.CurrentInstance.Create(&app)
+
+	// TODO : Create
+
 	json.NewEncoder(w).Encode(&app)
 }
 

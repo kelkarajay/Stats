@@ -4,52 +4,34 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/stretchr/testify/mock"
-
-	"github.com/jinzhu/gorm"
+	"github.com/Xivolkar/Stats/model"
 	_ "github.com/mattn/go-sqlite3" // Database driver
 )
 
-// CurrentInstance - Pointer to the database session
-var CurrentInstance *gorm.DB
-
 // DataStorer defines all the database operations
 type DataStorer interface {
-	//ListUsers() ([]User, error)
-	//GetUser(i int) (User, error)
-	//AddUser(u User) (User, error)
-	//UpdateUser(u User) (User, error)
-	DeleteUser(i int) error
-}
-
-// MockInstance - For tests
-type MockInstance struct {
-	mock.Mock
+	GetStats() ([]model.Stat, error)
+	Close() error
 }
 
 // Instance - DB Instance
 type Instance struct {
-	db *sql.DB
+	DB *sql.DB
 }
 
-func (mi *MockInstance) DeleteUser(i int) error {
-	returnVals := mi.Called(i)
-	// return the values which we define
-	return returnVals.Error(1)
+// Close - Shutdown DB
+func (ci *Instance) Close() error {
+	return ci.DB.Close()
 }
 
-func (ci *Instance) DeleteUser(i int) error {
-	return nil
+func (ci *Instance) GetStats() ([]model.Stat, error) {
+	var stats []model.Stat
+	return stats, nil
 }
 
 // NewDB - Initializes the DB and returns if there is an error in the process
-func NewDB() (err error) {
+func NewDB() (*sql.DB, error) {
 	log.Println("Connecting to the Database")
-	CurrentInstance, err = gorm.Open("sqlite3", "./foo.db")
-	return err
-}
-
-func NewProdDB() (*sql.DB, error) {
-db, err := sql.Open("sqlite3", "./foo.db")
-return db, err
+	db, err := sql.Open("sqlite3", "./foo.db")
+	return db, err
 }
