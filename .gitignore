@@ -28,3 +28,6 @@ _testmain.go
 
 # Test Database
 foo.db
+
+# GoLand
+**/.idea
