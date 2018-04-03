@@ -2,7 +2,6 @@ package db
 
 import (
 	"database/sql"
-	"log"
 
 	"github.com/Xivolkar/Stats/model"
 	_ "github.com/mattn/go-sqlite3" // Database driver
@@ -31,7 +30,6 @@ func (ci *Instance) GetStats() ([]model.Stat, error) {
 
 // NewDB - Initializes the DB and returns if there is an error in the process
 func NewDB() (*sql.DB, error) {
-	log.Println("Connecting to the Database")
 	db, err := sql.Open("sqlite3", "./foo.db")
 	return db, err
 }

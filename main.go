@@ -8,23 +8,22 @@ import (
 
 	"github.com/Xivolkar/Stats/app"
 	"github.com/Xivolkar/Stats/web"
-	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
+	log.Println("Connecting to the Database")
 	d, err := db.NewDB()
 	if err != nil {
-		log.Fatalln("No DB")
+		log.Fatalln("Database Init failed. Stopping boot")
 	}
+	log.Println("Database up and running")
 
 	instance := &db.Instance{DB: d}
 
 	ctx := app.AppContext{
 		DB: instance,
 	}
-	log.Println(ctx)
 
-	log.Println("Database up and running")
 	defer ctx.DB.Close()
 
 	router := web.NewRouter(ctx)
