@@ -18,13 +18,13 @@ var routes = Routes{
 	Route{
 		"GetAllStats",
 		"GET",
-		apiV1 + "/AllStats",
+		apiV1 + "/Stats",
 		GetAllStats,
 	},
 	Route{
 		"PostStat",
 		"POST",
-		apiV1 + "/PostStat",
+		apiV1 + "/Stats",
 		PostStat,
 	},
 	Route{
@@ -43,6 +43,12 @@ var routes = Routes{
 		"CreateApp",
 		"POST",
 		apiV1 + "/Apps",
+		CreateApp,
+	},
+	Route{
+		"CreateApp",
+		"PUT",
+		apiV1 + "/Apps/{appID}",
 		CreateApp,
 	},
 	Route{
