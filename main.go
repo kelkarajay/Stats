@@ -24,6 +24,12 @@ func main() {
 		DB: instance,
 	}
 
+	err = ctx.DB.Migrate()
+	if err != nil {
+		log.Println(err)
+		log.Fatal("Migration failed")
+	}
+
 	defer ctx.DB.Close()
 
 	router := web.NewRouter(ctx)

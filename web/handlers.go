@@ -39,7 +39,12 @@ func Index(w http.ResponseWriter, r *http.Request, ctx app.AppContext) {
 func GetAllStats(w http.ResponseWriter, r *http.Request, ctx app.AppContext) {
 	var stats []model.Stat
 
-	stats, _ = ctx.DB.GetStats()
+	stats, err := ctx.DB.GetStats()
+
+	if err != nil {
+		returnInternalServerError(&w, err)
+		return
+	}
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
@@ -121,6 +126,14 @@ func CreateApp(w http.ResponseWriter, r *http.Request, ctx app.AppContext) {
 func returnBadRequest(w *http.ResponseWriter, err error) {
 	(*w).Header().Set("Content-Type", "application/json; charset=UTF-8")
 	(*w).WriteHeader(http.StatusBadRequest)
+	if err := json.NewEncoder((*w)).Encode(err); err != nil {
+		panic(err)
+	}
+}
+
+func returnInternalServerError(w *http.ResponseWriter, err error) {
+	(*w).Header().Set("Content-Type", "application/json; charset=UTF-8")
+	(*w).WriteHeader(http.StatusInternalServerError)
 	if err := json.NewEncoder((*w)).Encode(err); err != nil {
 		panic(err)
 	}

@@ -18,3 +18,7 @@ func (mi *MockInstance) GetStats() ([]model.Stat, error) {
 	var stats []model.Stat
 	return stats, nil
 }
+
+func (mi *MockInstance) Migrate() error {
+	return nil
+}
