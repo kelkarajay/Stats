@@ -12,7 +12,8 @@ import (
 
 func main() {
 	log.Println("Connecting to the Database")
-	d, err := db.NewDB()
+	config := db.LoadDbConfig()
+	d, err := db.NewDB(config.Server, config.Port, config.UserID, config.Password, config.DatabaseName)
 	if err != nil {
 		log.Fatalln("Database Init failed. Stopping boot")
 	}
