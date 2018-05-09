@@ -74,9 +74,7 @@ func (ci *Instance) GetStats() ([]model.Stat, error) {
 }
 
 func (ci *Instance) Migrate() error {
-	_, err := ci.DB.Exec("CREATE TABLE IF NOT EXISTS Stat(StatAppID VARCHAR(255), StatClientID VARCHAR(255), StatType VARCHAR(255), StatCategory VARCHAR(255), StatValue VARCHAR(255), StatTime VARCHAR(255), StatData VARCHAR(255))")
-
-	return err
+	return nil
 }
 
 // NewDB - Initializes the DB and returns if there is an error in the process
