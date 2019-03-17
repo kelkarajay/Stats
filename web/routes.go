@@ -1,5 +1,7 @@
 package web
 
+import "github.com/Xivolkar/Stats/web/handlers"
+
 // Route type def
 type Route struct {
 	Name        string
@@ -19,37 +21,31 @@ var routes = Routes{
 		"GetAllStats",
 		"GET",
 		apiV1 + "/Stats",
-		GetAllStats,
+		handlers.GetAllStats,
 	},
 	Route{
 		"PostStat",
 		"POST",
 		apiV1 + "/Stats",
-		PostStat,
+		handlers.PostStat,
 	},
 	Route{
 		"GetAllApps",
 		"GET",
 		apiV1 + "/Apps",
-		GetAllApps,
+		handlers.GetAllApps,
 	},
 	Route{
 		"GetApp",
 		"GET",
 		apiV1 + "/Apps/{appID}",
-		GetApp,
+		handlers.GetApp,
 	},
 	Route{
 		"CreateApp",
 		"POST",
 		apiV1 + "/Apps",
-		CreateApp,
-	},
-	Route{
-		"CreateApp",
-		"PUT",
-		apiV1 + "/Apps/{appID}",
-		CreateApp,
+		handlers.CreateApp,
 	},
 	Route{
 		"Index",

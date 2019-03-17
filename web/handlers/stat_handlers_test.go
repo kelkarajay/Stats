@@ -1,17 +1,15 @@
-package web
+package handlers
 
 import (
 	"bytes"
 	"encoding/json"
+	"github.com/Xivolkar/Stats/app"
+	"github.com/Xivolkar/Stats/model"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"github.com/Xivolkar/Stats/app"
-
-	"github.com/Xivolkar/Stats/model"
 )
 
 func TestGetAllStatsHandler(t *testing.T) {
