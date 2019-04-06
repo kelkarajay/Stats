@@ -20,3 +20,11 @@ func returnInternalServerError(w *http.ResponseWriter, err error) {
 		panic(err)
 	}
 }
+
+func returnBuiltResponse(w *http.ResponseWriter, i interface{}) {
+	(*w).Header().Set("Content-Type", "application/json; charset=UTF-8")
+	(*w).WriteHeader(http.StatusOK)
+	if err := json.NewEncoder((*w)).Encode(&i); err != nil {
+		returnInternalServerError(w, err)
+	}
+}

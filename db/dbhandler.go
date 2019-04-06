@@ -15,6 +15,7 @@ import (
 type DataStorer interface {
 	Migrate() error
 	GetStats() ([]model.Stat, error)
+	GetApps() ([]model.App, error)
 	Close() error
 }
 
@@ -71,6 +72,10 @@ func (ci *Instance) GetStats() ([]model.Stat, error) {
 	}
 
 	return stats, nil
+}
+
+func (ci *Instance) GetApps() ([]model.App, error) {
+	return nil, nil
 }
 
 func (ci *Instance) Migrate() error {

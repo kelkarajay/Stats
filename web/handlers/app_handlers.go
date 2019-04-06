@@ -12,14 +12,15 @@ import (
 func GetAllApps(w http.ResponseWriter, r *http.Request, ctx app.AppContext) {
 	var apps []model.App
 	// TODO : QUERY
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(&apps); err != nil {
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(err)
 
+	apps, err := ctx.DB.GetApps()
+
+	if err != nil {
+		returnInternalServerError(&w, err)
+		return
 	}
+
+	returnBuiltResponse(&w, apps)
 }
 
 // GetApp - Handler to return specific app

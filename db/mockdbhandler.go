@@ -19,6 +19,11 @@ func (mi *MockInstance) GetStats() ([]model.Stat, error) {
 	return stats, nil
 }
 
+func (mi *MockInstance) GetApps() ([]model.App, error) {
+	retVal := mi.Called()
+	return retVal.Get(0).([]model.App), retVal.Error(1)
+}
+
 func (mi *MockInstance) Migrate() error {
 	return nil
 }
