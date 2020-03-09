@@ -1,5 +1,5 @@
 # Stats
 
-[![Build Status](https://travis-ci.org/Xivolkar/Stats.svg?branch=dev)](https://travis-ci.org/Xivolkar/Stats)
+![Go](https://github.com/Xivolkar/Stats/workflows/Go/badge.svg?branch=master)
 
 Telemetry for applications
