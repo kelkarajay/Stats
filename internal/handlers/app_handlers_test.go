@@ -32,7 +32,7 @@ func TestGetAllApps(t *testing.T) {
 	log.Print(resp.Body)
 
 	if status := resp.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
+		t.Errorf("statHandler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}
 }
@@ -58,7 +58,7 @@ func TestGetAllApps_DatabaseFetchError(t *testing.T) {
 	log.Print(resp.Body)
 
 	if status := resp.Code; status != http.StatusInternalServerError {
-		t.Errorf("handler returned wrong status code: got %v want %v",
+		t.Errorf("statHandler returned wrong status code: got %v want %v",
 			status, http.StatusInternalServerError)
 	}
 }

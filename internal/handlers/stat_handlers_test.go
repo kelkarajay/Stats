@@ -26,7 +26,7 @@ func TestGetAllStatsHandler(t *testing.T) {
 	handler.ServeHTTP(resp, req)
 
 	if status := resp.Code; status != http.StatusOK {
-		t.Errorf("handler returned wrong status code: got %v want %v",
+		t.Errorf("statHandler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}
 }
@@ -54,7 +54,7 @@ func TestPostStatHandler(t *testing.T) {
 	}
 
 	if status != http.StatusCreated {
-		t.Errorf("handler returned wrong status code: got %v want %v",
+		t.Errorf("statHandler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 		b, _ := ioutil.ReadAll(resp.Body)
 		t.Error(string(b))
