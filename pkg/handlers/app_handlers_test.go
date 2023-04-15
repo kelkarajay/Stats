@@ -1,14 +1,15 @@
-package handlers
+package handlers_test
 
 import (
 	"errors"
-	"github.com/Xivolkar/Stats/app"
-	"github.com/Xivolkar/Stats/db"
-	"github.com/Xivolkar/Stats/model"
 	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/Xivolkar/Stats/app"
+	"github.com/Xivolkar/Stats/db"
+	"github.com/Xivolkar/Stats/model"
 )
 
 func TestGetAllApps(t *testing.T) {

@@ -2,8 +2,9 @@ package handlers
 
 import (
 	"encoding/json"
-	"go.uber.org/zap"
 	"net/http"
+
+	"go.uber.org/zap"
 )
 
 const JSON_CONTENT_TYPE = "application/json; charset=UTF-8"

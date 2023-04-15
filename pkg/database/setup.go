@@ -1,9 +1,10 @@
 package database
 
 import (
+	"time"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"time"
 )
 
 func SetupDatabase(config Config) (*gorm.DB, error) {

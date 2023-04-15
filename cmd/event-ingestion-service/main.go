@@ -1,15 +1,17 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
-	"github.com/kelkarajay/Stats/internal/handlers"
-	"github.com/kelkarajay/Stats/pkg/database"
-	"github.com/kelkarajay/Stats/pkg/event"
-	"go.uber.org/zap"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/gorilla/mux"
+
+	"github.com/kelkarajay/Stats/pkg/database"
+	"github.com/kelkarajay/Stats/pkg/event"
+	"github.com/kelkarajay/Stats/pkg/handlers"
+	"go.uber.org/zap"
 )
 
 type HandlerRegistry struct {

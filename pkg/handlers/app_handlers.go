@@ -2,9 +2,10 @@ package handlers
 
 import (
 	"encoding/json"
+	"net/http"
+
 	"github.com/kelkarajay/Stats/pkg/app"
 	"go.uber.org/zap"
-	"net/http"
 
 	"github.com/Xivolkar/Stats/model"
 )

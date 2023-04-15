@@ -2,11 +2,12 @@ package handlers
 
 import (
 	"encoding/json"
-	"github.com/kelkarajay/Stats/pkg/event"
-	"go.uber.org/zap"
 	"io"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/kelkarajay/Stats/pkg/event"
+	"go.uber.org/zap"
 )
 
 type StatHandlerOperations interface {
