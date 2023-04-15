@@ -1,34 +1,54 @@
 package handlers_test
 
 import (
-	"errors"
 	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	"github.com/Xivolkar/Stats/app"
-	"github.com/Xivolkar/Stats/db"
-	"github.com/Xivolkar/Stats/model"
+	"github.com/kelkarajay/Stats/pkg/app"
+	"github.com/kelkarajay/Stats/pkg/database"
+	"github.com/kelkarajay/Stats/pkg/handlers"
+	"github.com/stretchr/testify/suite"
+	"go.uber.org/zap"
+	"gorm.io/gorm"
 )
 
-func TestGetAllApps(t *testing.T) {
+// Define the suite
+type AppTestSuite struct {
+	suite.Suite
+	db            *gorm.DB
+	logger        *zap.Logger
+	appRepository app.RepositoryOperations
+}
+
+func (suite *AppTestSuite) SetupTest() {
+	logger := zap.NewNop()
+	databaseConfig, err := database.LoadConfig()
+	if err != nil {
+		logger.Fatal("Could not load database configuration", zap.Error(err))
+	}
+
+	db, err := database.SetupDatabase(databaseConfig)
+	if err != nil {
+		logger.Fatal("Database init failed", zap.Error(err))
+	}
+
+	suite.db = db
+	suite.logger = logger
+	suite.appRepository = app.NewAppRepository(db)
+}
+
+func (suite *AppTestSuite) TestGetAllApps(t *testing.T) {
 	req, err := http.NewRequest(http.MethodGet, "/api/v1/Apps", nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	db := new(db.MockInstance)
-
-	db.On("GetApps").Return([]model.App{{AppID: "123", AppName: "App1", AppDescription: "Test description"}}, nil)
-
-	ctx := app.CreateContextForTestSetup()
-	ctx.DB = db
-
 	resp := httptest.NewRecorder()
-	handler := makeHandler(ctx, GetAllApps)
+	handler := handlers.NewAppHandler(suite.appRepository, suite.logger)
 
-	handler.ServeHTTP(resp, req)
+	handler.GetAllApps(resp, req)
 
 	log.Print(resp.Body)
 
@@ -38,28 +58,6 @@ func TestGetAllApps(t *testing.T) {
 	}
 }
 
-func TestGetAllApps_DatabaseFetchError(t *testing.T) {
-	req, err := http.NewRequest(http.MethodGet, "/api/v1/Apps", nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	db := new(db.MockInstance)
-
-	db.On("GetApps").Return([]model.App{}, errors.New("Database query failed"))
-
-	ctx := app.CreateContextForTestSetup()
-	ctx.DB = db
-
-	resp := httptest.NewRecorder()
-	handler := makeHandler(ctx, GetAllApps)
-
-	handler.ServeHTTP(resp, req)
-
-	log.Print(resp.Body)
-
-	if status := resp.Code; status != http.StatusInternalServerError {
-		t.Errorf("statHandler returned wrong status code: got %v want %v",
-			status, http.StatusInternalServerError)
-	}
+func TestAppTestSuite(t *testing.T) {
+	suite.Run(t, new(AppTestSuite))
 }

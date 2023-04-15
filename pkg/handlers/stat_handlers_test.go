@@ -18,9 +18,7 @@ import (
 	"gorm.io/gorm"
 )
 
-// Define the suite, and absorb the built-in basic suite
-// functionality from testify - including a T() method which
-// returns the current testing context
+// Define the suite
 type StatTestSuite struct {
 	suite.Suite
 	db              *gorm.DB
@@ -28,8 +26,6 @@ type StatTestSuite struct {
 	eventRepository event.RepositoryOperations
 }
 
-// Make sure that VariableThatShouldStartAtFive is set to five
-// before each test
 func (suite *StatTestSuite) SetupTest() {
 	logger := zap.NewNop()
 	databaseConfig, err := database.LoadConfig()
@@ -56,7 +52,7 @@ func (suite *StatTestSuite) TestGetAllStatsHandler(t *testing.T) {
 	handler := handlers.NewStatHandler(suite.eventRepository, suite.logger)
 	resp := httptest.NewRecorder()
 
-	handler.ServeHTTP(resp, req)
+	handler.GetAllStats(resp, req)
 
 	if status := resp.Code; status != http.StatusOK {
 		t.Errorf("statHandler returned wrong status code: got %v want %v",
@@ -76,7 +72,7 @@ func (suite *StatTestSuite) TestPostStatHandler(t *testing.T) {
 	handler := handlers.NewStatHandler(suite.eventRepository, suite.logger)
 	resp := httptest.NewRecorder()
 
-	handler.ServeHTTP(resp, req)
+	handler.PostStat(resp, req)
 
 	var status int
 

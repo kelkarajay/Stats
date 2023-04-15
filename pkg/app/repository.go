@@ -2,7 +2,6 @@ package app
 
 import (
 	"context"
-	"errors"
 
 	"gorm.io/gorm"
 )
@@ -13,7 +12,6 @@ type Repository struct {
 
 type RepositoryOperations interface {
 	GetApps(context context.Context) ([]App, error)
-	CreateEvent(context context.Context, app App) error
 }
 
 func NewAppRepository(db *gorm.DB) RepositoryOperations {
@@ -29,8 +27,4 @@ func (r Repository) GetApps(context context.Context) ([]App, error) {
 	}
 
 	return apps, nil
-}
-
-func (r Repository) CreateEvent(context context.Context, app App) error {
-	return errors.New("Unimplemented")
 }
