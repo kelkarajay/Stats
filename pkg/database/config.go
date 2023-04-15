@@ -8,7 +8,7 @@ import (
 
 type Config struct {
 	Hostname     string `json:"server"`
-	Port         string `json:"port"`
+	Port         int    `json:"port"`
 	UserID       string `json:"userId"`
 	Password     string `json:"password"`
 	DatabaseName string `json:"databaseName"`
