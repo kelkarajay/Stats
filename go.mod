@@ -6,6 +6,7 @@ require (
 	github.com/Xivolkar/Stats v0.0.0-20200309135214-cf9e68102519
 	github.com/gorilla/mux v1.8.0
 	github.com/kelseyhightower/envconfig v1.4.0
+	github.com/stretchr/testify v1.7.1
 	go.uber.org/zap v1.21.0
 	gorm.io/driver/postgres v1.3.8
 	gorm.io/gorm v1.23.8
@@ -29,7 +30,6 @@ require (
 	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/stretchr/objx v0.2.0 // indirect
-	github.com/stretchr/testify v1.7.1 // indirect
 	github.com/unrolled/render v1.4.1 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
