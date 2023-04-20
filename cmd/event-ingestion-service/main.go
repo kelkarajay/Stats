@@ -28,7 +28,7 @@ func NewRouter(registry HandlerRegistry) *mux.Router {
 }
 
 func main() {
-	logger := zap.L()
+	logger, _ := zap.NewProduction()
 
 	logger.Info("Connecting to the database")
 	databaseConfig, err := database.LoadConfig()
