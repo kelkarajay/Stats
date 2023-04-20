@@ -7,19 +7,19 @@ import (
 )
 
 type Config struct {
-	Hostname     string `json:"server"`
-	Port         int    `json:"port"`
-	UserID       string `json:"userId"`
-	Password     string `json:"password"`
-	DatabaseName string `json:"databaseName"`
+	Hostname string
+	Port     int
+	User     string
+	Password string
+	Name     string
 }
 
 func (c Config) GetDSN() string {
 	return fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable",
 		c.Hostname,
-		c.UserID,
+		c.User,
 		c.Password,
-		c.DatabaseName,
+		c.Name,
 		c.Port,
 	)
 }

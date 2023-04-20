@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  event-ingestion-service:
+    build:
+      context: .
+      args:
+        BUILD_CMD: event-ingestion-service
+    environment:
+      - DATABASE_HOSTNAME=db
+      - DATABASE_PORT=5432
+      - DATABASE_USER=root
+      - DATABASE_PASSWORD=somepassword
+      - DATABASE_NAME=statsdb
+    ports:
+      - "8080:8080"
+
+  db:
+    image: postgres:15.2
+    restart: always
+    environment:
+      - POSTGRES_DB=statsdb
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=somepassword
+    volumes:
+      - db-data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+
+volumes:
+  db-data:
+    driver: local

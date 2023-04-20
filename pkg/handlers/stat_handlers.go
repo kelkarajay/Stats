@@ -27,7 +27,7 @@ func NewStatHandler(repository event.RepositoryOperations, logger *zap.Logger) *
 
 // GetAllStats - Retrieves all stats
 func (h *statHandler) GetAllStats(w http.ResponseWriter, r *http.Request) {
-	stats, err := h.eventRepository.GetStats(r.Context())
+	stats, err := h.eventRepository.GetEvents(r.Context())
 
 	if err != nil {
 		h.httpUtil.WriteJSONInternalServerErrorResponse(w, err)

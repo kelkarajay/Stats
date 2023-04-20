@@ -12,7 +12,7 @@ type Repository struct {
 }
 
 type RepositoryOperations interface {
-	GetStats(context context.Context) ([]Event, error)
+	GetEvents(context context.Context) ([]Event, error)
 	CreateEvent(context context.Context, event Event) error
 }
 
@@ -20,15 +20,15 @@ func NewStatRepository(db *gorm.DB) RepositoryOperations {
 	return Repository{db: db}
 }
 
-func (r Repository) GetStats(context context.Context) ([]Event, error) {
-	var stats []Event
+func (r Repository) GetEvents(context context.Context) ([]Event, error) {
+	var events []Event
 
-	result := r.db.WithContext(context).Find(&stats)
+	result := r.db.WithContext(context).Find(&events)
 	if result.Error != nil {
-		return stats, result.Error
+		return events, result.Error
 	}
 
-	return stats, nil
+	return events, nil
 }
 
 func (r Repository) CreateEvent(context context.Context, event Event) error {
