@@ -38,7 +38,7 @@ jobs:
       run: docker-compose up -d db
 
     - name: Setup golang-migrate
-      run: curl -L https://github.com/golang-migrate/migrate/releases/download/v4.15.2/migrate.linux-amd64.tar.gz | tar xvz
+      run: go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
 
     - name: Run migrations
       run: migrate -database "postgres://root:somepassword@localhost:5432/statsdb?sslmode=disable" -path pkg/database/migrations up
