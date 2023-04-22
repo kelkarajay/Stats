@@ -3,6 +3,7 @@ package handlers_test
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -13,6 +14,7 @@ import (
 	"github.com/kelkarajay/Stats/pkg/database"
 	"github.com/kelkarajay/Stats/pkg/event"
 	"github.com/kelkarajay/Stats/pkg/handlers"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -43,7 +45,7 @@ func (suite *StatTestSuite) SetupTest() {
 	suite.eventRepository = event.NewStatRepository(db)
 }
 
-func (suite *StatTestSuite) TestGetAllStatsHandler(t *testing.T) {
+func (suite *StatTestSuite) TestGetAllStatsHandler() {
 	req, err := http.NewRequest(http.MethodGet, "/api/v1/AllStats", nil)
 	if err != nil {
 		log.Fatal(err)
@@ -55,12 +57,12 @@ func (suite *StatTestSuite) TestGetAllStatsHandler(t *testing.T) {
 	handler.GetAllStats(resp, req)
 
 	if status := resp.Code; status != http.StatusOK {
-		t.Errorf("statHandler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+		b, _ := ioutil.ReadAll(resp.Body)
+		assert.Equal(suite.T(), http.StatusOK, status, fmt.Sprintf("body %s", string(b)))
 	}
 }
 
-func (suite *StatTestSuite) TestPostStatHandler(t *testing.T) {
+func (suite *StatTestSuite) TestPostStatHandler() {
 	j := &model.Stat{}
 	payload, _ := json.Marshal(j)
 
@@ -81,10 +83,8 @@ func (suite *StatTestSuite) TestPostStatHandler(t *testing.T) {
 	}
 
 	if status != http.StatusCreated {
-		t.Errorf("statHandler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
 		b, _ := ioutil.ReadAll(resp.Body)
-		t.Error(string(b))
+		assert.Equal(suite.T(), http.StatusCreated, status, fmt.Sprintf("body %s", string(b)))
 	}
 }
 

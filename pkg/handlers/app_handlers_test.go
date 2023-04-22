@@ -1,6 +1,8 @@
 package handlers_test
 
 import (
+	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -9,6 +11,7 @@ import (
 	"github.com/kelkarajay/Stats/pkg/app"
 	"github.com/kelkarajay/Stats/pkg/database"
 	"github.com/kelkarajay/Stats/pkg/handlers"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -39,7 +42,7 @@ func (suite *AppTestSuite) SetupTest() {
 	suite.appRepository = app.NewAppRepository(db)
 }
 
-func (suite *AppTestSuite) TestGetAllApps(t *testing.T) {
+func (suite *AppTestSuite) TestGetAllApps() {
 	req, err := http.NewRequest(http.MethodGet, "/api/v1/Apps", nil)
 	if err != nil {
 		log.Fatal(err)
@@ -53,8 +56,8 @@ func (suite *AppTestSuite) TestGetAllApps(t *testing.T) {
 	log.Print(resp.Body)
 
 	if status := resp.Code; status != http.StatusOK {
-		t.Errorf("statHandler returned wrong status code: got %v want %v",
-			status, http.StatusOK)
+		b, _ := ioutil.ReadAll(resp.Body)
+		assert.Equal(suite.T(), http.StatusCreated, status, fmt.Sprintf("body %s", string(b)))
 	}
 }
 
