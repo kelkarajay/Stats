@@ -37,6 +37,12 @@ jobs:
     - name: Setup environment
       run: docker-compose up -d db
 
+    - name: Setup golang-migrate
+      run: go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@$TAG
+
+    - name: Run migrations
+      run: migrate -database "postgres://root:somepassword@localhost:5432/statsdb?sslmode=disable" -path pkg/database/migrations up
+
     - name: Test
       run: go test -v ./...
       env:
