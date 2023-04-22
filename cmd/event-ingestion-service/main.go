@@ -41,6 +41,11 @@ func main() {
 		logger.Fatal("Database init failed", zap.Error(err))
 	}
 
+	err = database.RunMigrations(db, databaseConfig)
+	if err != nil {
+		logger.Fatal("Failed to run database migrations", zap.Error(err))
+	}
+
 	eventRepository := event.NewStatRepository(db)
 	statHandler := handlers.NewStatHandler(eventRepository, logger)
 

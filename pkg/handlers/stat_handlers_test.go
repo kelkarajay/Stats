@@ -40,6 +40,11 @@ func (suite *StatTestSuite) SetupTest() {
 		logger.Fatal("Database init failed", zap.Error(err))
 	}
 
+	err = database.RunMigrations(db, databaseConfig)
+	if err != nil {
+		logger.Fatal("Database init failed", zap.Error(err))
+	}
+
 	suite.db = db
 	suite.logger = logger
 	suite.eventRepository = event.NewStatRepository(db)

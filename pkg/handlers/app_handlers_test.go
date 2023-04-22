@@ -37,6 +37,11 @@ func (suite *AppTestSuite) SetupTest() {
 		logger.Fatal("Database init failed", zap.Error(err))
 	}
 
+	err = database.RunMigrations(db, databaseConfig)
+	if err != nil {
+		logger.Fatal("Database init failed", zap.Error(err))
+	}
+
 	suite.db = db
 	suite.logger = logger
 	suite.appRepository = app.NewAppRepository(db)
