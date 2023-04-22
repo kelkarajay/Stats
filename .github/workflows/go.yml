@@ -40,8 +40,8 @@ jobs:
     - name: Test
       run: go test -v ./...
       env:
-        DATABASE_DB:statsdb
-        DATABASE_USER:root
-        DATABASE_PASSWORD:somepassword
-        DATABASE_PORT:5432
-        DATABASE_NAME:statsdb
+        DATABASE_DB: statsdb
+        DATABASE_USER: root
+        DATABASE_PASSWORD: somepassword
+        DATABASE_PORT: 5432
+        DATABASE_NAME: statsdb
