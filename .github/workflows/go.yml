@@ -40,11 +40,7 @@ jobs:
     - name: Test
       run: go test -v ./...
       env:
-<<<<<<< HEAD
-        DATABASE_DB: statsdb
-=======
         DATABASE_HOSTNAME: localhost
->>>>>>> 08da673 (Update go.yml)
         DATABASE_USER: root
         DATABASE_PASSWORD: somepassword
         DATABASE_PORT: 5432
